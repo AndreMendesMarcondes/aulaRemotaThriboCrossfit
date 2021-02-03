@@ -10,6 +10,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using AulaRemotaThriboCrossfit.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Logging;
 
 namespace AulaRemotaThriboCrossfit
 {
@@ -25,7 +29,31 @@ namespace AulaRemotaThriboCrossfit
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddCors();
+            services.AddControllersWithViews()
+                  .AddRazorRuntimeCompilation();
+
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/login");
+
+            var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
+            IdentityModelEventSource.ShowPII = true;
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             services.AddDbContext<AulaRemotaThriboCrossfitContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("AulaRemotaThriboCrossfitContext")));
@@ -49,6 +77,12 @@ namespace AulaRemotaThriboCrossfit
 
             app.UseRouting();
 
+            app.UseCors(x => x
+              .AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

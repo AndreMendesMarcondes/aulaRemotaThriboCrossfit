@@ -12,7 +12,8 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SECRET": "fedaf7d8863b48e197b9287d492b708e"
       }
     },
     "AulaRemotaThriboCrossfit": {

@@ -15,5 +15,7 @@ namespace AulaRemotaThriboCrossfit.Data
         }
 
         public DbSet<AulaRemotaThriboCrossfit.Models.Exercicio> Exercicio { get; set; }
+
+        public DbSet<AulaRemotaThriboCrossfit.Models.Treino> Treino { get; set; }
     }
 }
