@@ -1,11 +1,14 @@
 ﻿using AulaRemotaThriboCrossfit.Data;
 using AulaRemotaThriboCrossfit.Models;
 using AulaRemotaThriboCrossfit.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace AulaRemotaThriboCrossfit.Controllers
 {
@@ -17,19 +20,41 @@ namespace AulaRemotaThriboCrossfit.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logar(User model)
         {
-            var user = UserRepository.Get(model.Username, model.Password);
 
-            if (user == null)
+            var userModel = UserRepository.Get(model.Username, model.Password);
+
+            if (userModel == null)
                 return NotFound(new { message = "Usuário ou senha inválidos" });
 
-            var token = TokenService.GenerateToken(user);
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, userModel.Username),
+                new Claim(ClaimTypes.Role, "Administrator"),
+            };
 
-            user.Password = "";
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return View();
+            var authProperties = new AuthenticationProperties
+            {
+                RedirectUri = "/Home/Index",
+            };
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
+
+            return RedirectToAction("index", "home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
