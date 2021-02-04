@@ -1,7 +1,7 @@
-﻿using AulaRemotaThriboCrossfit.Filter;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace AulaRemotaThriboCrossfit.Controllers
 {
@@ -14,10 +14,15 @@ namespace AulaRemotaThriboCrossfit.Controllers
             _logger = logger;
         }
 
-        [Authorize]
         public IActionResult Index()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return View("home");
         }
     }
 }
