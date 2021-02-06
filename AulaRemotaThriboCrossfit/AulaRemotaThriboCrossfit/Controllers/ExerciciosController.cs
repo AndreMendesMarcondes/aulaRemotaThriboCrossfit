@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AulaRemotaThriboCrossfit.Models;
 using AulaRemotaThriboCrossfit.Data.Interface;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AulaRemotaThriboCrossfit.Controllers
 {
+    [Authorize]
     public class ExerciciosController : Controller
     {
         private readonly IExercicioRepository _exercicioRepository;
