@@ -24,7 +24,7 @@ namespace AulaRemotaThriboCrossfit.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return View("home");
+            return RedirectToAction("index", "login");
         }
     }
 }

@@ -3,16 +3,20 @@
 @{
     ViewData["Title"] = "Index";
 }
+<link href="~/css/exericios.css" rel="stylesheet" />
 <p>
     <a asp-action="Create" type="button" class="btn btn-primary">
         <span class="glyphicon glyphicon-plus"></span> Adicionar
     </a>
 </p>
-<table class="table">
+<table class="table" id="tableExercicio">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoExercicio)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Equipamento)
@@ -26,28 +30,28 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoExercicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Equipamento)
-            </td>
-            <td>
-                <video width="250" height="200" controls>
-                    <source src="@item.VideoURL" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </td>
-            <td>
-                <a asp-action="Delete" asp-route-id="@item.Uid" type="button" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-trash"></span> Delete
-                </a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoExercicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipamento)
+                </td>
+                <td>
+                    <video width="250" height="200" controls>
+                        <source src="@item.VideoURL" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Uid" type="button" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span> Delete
+                    </a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

@@ -50,12 +50,15 @@ namespace AulaRemotaThriboCrossfit.Controllers
             var exercicio = new Exercicio();
             if (ModelState.IsValid)
             {
-                var stream = exercicioDTO.Video.OpenReadStream();
-                var urlVideo = await _firebaseStorageRepository.SaveFileAsync(stream);
+                if (exercicioDTO.Video != null)
+                {
+                    var stream = exercicioDTO.Video.OpenReadStream();
+                    var urlVideo = await _firebaseStorageRepository.SaveFileAsync(stream);
+                    exercicio.VideoURL = urlVideo;
+                }
 
                 exercicio.Equipamento = exercicioDTO.Equipamento;
                 exercicio.Nome = exercicioDTO.Nome;
-                exercicio.VideoURL = urlVideo;
                 exercicio.TipoExercicio = exercicioDTO.TipoExercicio;
 
                 await _exercicioRepository.Create(exercicio);
