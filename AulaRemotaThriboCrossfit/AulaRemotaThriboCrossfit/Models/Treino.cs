@@ -15,6 +15,8 @@ namespace AulaRemotaThriboCrossfit.Models
         [FirestoreDocumentId]
         public string Uid { get; set; }
         [FirestoreProperty]
+        public string Equipamento { get; set; }
+        [FirestoreProperty]
         public DateTime Dia { get; set; }
         [FirestoreProperty]
         public List<ExercicioDescricao> Exercicios { get; set; }

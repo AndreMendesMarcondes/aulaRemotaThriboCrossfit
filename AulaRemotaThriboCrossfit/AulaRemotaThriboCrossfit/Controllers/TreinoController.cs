@@ -70,6 +70,7 @@ namespace AulaRemotaThriboCrossfit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IFormCollection collection)
         {
+            var treino = new Treino();
             if (ModelState.IsValid)
             {
                 int maxValue = GetMaxValue(collection);
@@ -84,17 +85,17 @@ namespace AulaRemotaThriboCrossfit.Controllers
                         exercicioDescricao.Exercicio = ListaExercicios.FirstOrDefault(c => c.Uid == collection[$"selectExercicios{i}"]);
                         exercicioDescricaos.Add(exercicioDescricao);
                     }
-                }
+                }            
 
                 if (exercicioDescricaos.Any())
                 {
-                    var treino = new Treino();
                     treino.Dia = Convert.ToDateTime(collection["Dia"]).ToUniversalTime();
+                    treino.Equipamento = collection["Equipamento"];
                     treino.Exercicios = exercicioDescricaos;
                     await _treinoRepository.Create(treino);
                 }
             }
-            return View();
+            return View(treino);
         }
 
         public async Task<IActionResult> Edit(string id)
@@ -185,7 +186,8 @@ namespace AulaRemotaThriboCrossfit.Controllers
             var listaFiltrada = new List<Exercicio>();
 
             if (!string.IsNullOrEmpty(tipoExercicio) && !string.IsNullOrEmpty(equipamento))
-                listaFiltrada = ListaExercicios.Where(c => c.TipoExercicio == tipoExercicio && c.Equipamento == equipamento).ToList();
+                listaFiltrada = ListaExercicios.Where(c => (c.TipoExercicio == tipoExercicio || c.TipoExercicio == "Nenhum") &&
+                    (c.Equipamento == equipamento || c.Equipamento == "Nenhum")).ToList();
 
             ViewBag.ListaDeExercicios = listaFiltrada;
 

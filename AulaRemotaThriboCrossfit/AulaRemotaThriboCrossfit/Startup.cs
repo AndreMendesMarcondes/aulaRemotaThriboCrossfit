@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Http;
 using System.Net;
 using AulaRemotaThriboCrossfit.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Localization;
+using System.Threading;
+using System.Globalization;
 
 namespace AulaRemotaThriboCrossfit
 {
@@ -51,6 +54,12 @@ namespace AulaRemotaThriboCrossfit
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseRequestLocalization(new RequestLocalizationOptions()
+            {
+                DefaultRequestCulture = new RequestCulture("pt-BR")
+            });
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

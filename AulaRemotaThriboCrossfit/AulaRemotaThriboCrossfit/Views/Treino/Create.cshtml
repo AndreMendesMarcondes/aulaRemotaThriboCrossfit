@@ -16,26 +16,40 @@
         <form asp-action="Create" class="col-md-12">
             <input type="hidden" value="0" id="countExercicios" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group col-md-3 row">
-                <label asp-for="Dia" class="control-label"></label>
-                <input asp-for="Dia" class="form-control" />
-                <span asp-validation-for="Dia" class="text-danger"></span>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label asp-for="Dia" class="control-label"></label>
+                    <input asp-for="Dia" class="form-control" onchange="verificarExercicios()" />
+                    <span asp-validation-for="Dia" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Equipamento" class="control-label"></label>
+                    <select asp-for="Equipamento" class="form-control"  onchange="verificarExercicios()">
+                        <option value="" selected>Selecione...</option>
+                        <option value="Anilha">Anilha</option>
+                        <option value="Dumbbell">Dumbbell</option>
+                        <option value="Kettlebell">Kettlebell</option>
+                        <option value="Bola">Bola</option>
+                    </select>
+                </div>
             </div>
-            <fieldset class="col-md-12">
-                <legend>Exercícios</legend>
-                <div style="margin: 10px">
-                    <button asp-action="Index" type="button" onclick="addNovoExercicio()" class="btn btn-success">
-                        <span class="glyphicon glyphicon-plus"></span>Adicionar Exercicio
-                    </button>
+            <div id="exercicios">
+                <fieldset class="col-md-12">
+                    <legend>Exercícios</legend>
+                    <div style="margin: 10px">
+                        <button asp-action="Index" type="button" onclick="addNovoExercicio()" class="btn btn-success">
+                            <span class="glyphicon glyphicon-plus"></span>Adicionar Exercicio
+                        </button>
+                    </div>
+                    <div id="listaExercicios">
+                        @{
+                            await Html.RenderPartialAsync("_NovoExercicioTreino", 0);
+                        }
+                    </div>
+                </fieldset>
+                <div class="form-group row text-center col-md-12" style="margin: 10px">
+                    <input type="submit" value="Salvar Treino" class="btn btn-primary col-md-5" />
                 </div>
-                <div id="listaExercicios">
-                    @{
-                        await Html.RenderPartialAsync("_NovoExercicioTreino", 0);
-                    }
-                </div>
-            </fieldset>
-            <div class="form-group row text-center col-md-12" style="margin: 10px">
-                <input type="submit" value="Salvar Treino" class="btn btn-primary col-md-5" />
             </div>
         </form>
     </div>
@@ -45,9 +59,13 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
+        $(document).ready(function () {
+            $("#exercicios").hide();
+        });
+
         function atualizarListaExercicios(uid) {
             var tipoExercicio = "#tipoExercicio" + uid;
-            var tipoEquipamento = "#tipoEquipamento" + uid;
+            var tipoEquipamento = "#Equipamento";
             var selectExercicios = "#selectExercicios" + uid;
 
             $.ajax({
@@ -89,5 +107,16 @@
             var divExercicio = "#divExercicio" + uid;
             $(divExercicio).remove();
         }   
+
+        function verificarExercicios() {
+            var dia = $("#Dia").val();
+            var equip = $("#Equipamento").val();
+
+            if (equip != null && dia != '' && equip != null && equip != '') {
+                $("#exercicios").show();
+            } else {
+                $("#exercicios").hide();
+            }
+        }
     </script>
 }

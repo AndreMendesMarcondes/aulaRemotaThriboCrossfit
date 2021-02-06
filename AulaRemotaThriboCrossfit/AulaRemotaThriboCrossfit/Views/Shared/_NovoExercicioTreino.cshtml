@@ -2,12 +2,11 @@
 @{
     var i = Model;
     var tipoExercicio = $"tipoExercicio{i}";
-    var tipoEquipamento = $"tipoEquipamento{i}";
     var selectExercicios = $"selectExercicios{i}";
     var descricaoExercicio = $"descricaoExercicios{i}";
     var divExercicio = $"divExercicio{i}";
     <div class="row form-group col-md-12" id="@divExercicio">
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
             <select class="form-control" onchange="atualizarListaExercicios(@i)" id="@tipoExercicio" name="@tipoExercicio">
                 <option value="" selected>Selecione...</option>
                 <option value="Alongamento">Alongamento</option>
@@ -16,21 +15,12 @@
                 <option value="WOD">WOD</option>
             </select>
         </div>
-        <div class="form-group col-md-2">
-            <select class="form-control" onchange="atualizarListaExercicios(@i)" name="@tipoEquipamento" id="@tipoEquipamento">
-                <option value="" selected>Selecione...</option>
-                <option value="Anilha">Anilha</option>
-                <option value="Dumbbell">Dumbbell</option>
-                <option value="Kettlebell">Kettlebell</option>
-                <option value="Bola">Bola</option>
-            </select>
-        </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
             <select class="form-control" name="@selectExercicios" id="@selectExercicios">
                 <option value="">Selecione...</option>
             </select>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
             <input type="text" class="form-control" placeholder="Descricao" id="@descricaoExercicio" name="@descricaoExercicio" />
         </div>
         <div class="form-group col-md-1">
