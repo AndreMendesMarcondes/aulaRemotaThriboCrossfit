@@ -79,6 +79,9 @@
 </div>
 <script>
     $(document).ready(function () {
+        $('#modalVideo').on('hidden.bs.modal', function () {
+            $('#videoModal').get(0).pause();
+        })
         $('#modalVideo').on('show.bs.modal', function (e) {
             var videoUrl = $(e.relatedTarget).data('video-url');
             $('#videoModal').get(0).pause();
