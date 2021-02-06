@@ -1,5 +1,6 @@
 ﻿using Google.Cloud.Firestore;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AulaRemotaThriboCrossfit.Models
 {

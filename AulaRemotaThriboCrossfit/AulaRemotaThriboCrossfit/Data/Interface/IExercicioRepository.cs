@@ -1,5 +1,5 @@
 ﻿using AulaRemotaThriboCrossfit.Models;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AulaRemotaThriboCrossfit.Data.Interface
@@ -8,7 +8,7 @@ namespace AulaRemotaThriboCrossfit.Data.Interface
     {
         public Task Create(Exercicio entity);
         public Task<Exercicio> GetById(string uid);
-        Task<IQueryable<Exercicio>> Get();
+        Task<IEnumerable<Exercicio>> Get();
         Task Update(string uid, Exercicio entity);
         Task Delete(string uid);
     }

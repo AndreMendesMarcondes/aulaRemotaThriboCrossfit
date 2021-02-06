@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using AulaRemotaThriboCrossfit.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AulaRemotaThriboCrossfit
 {
@@ -42,6 +43,7 @@ namespace AulaRemotaThriboCrossfit
             services.AddScoped<IExercicioRepository, ExercicioRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IFirebaseStorageRepository, FirebaseStorageRepository>();
+            services.AddScoped<ITreinoRepository, TreinoRepository>();
 
             EnableCors(services);
         }

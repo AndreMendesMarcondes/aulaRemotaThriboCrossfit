@@ -1,0 +1,5 @@
+﻿@model List<Exercicio>
+@foreach (var exercicio in (IEnumerable<Exercicio>)ViewBag.ListaDeExercicios)
+{
+    <option value="@exercicio.Uid">@exercicio.Nome</option>
+}

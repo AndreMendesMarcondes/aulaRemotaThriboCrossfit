@@ -7,44 +7,44 @@ using System.Threading.Tasks;
 
 namespace AulaRemotaThriboCrossfit.Data.Imp
 {
-    public class ExercicioRepository : MainContext, IExercicioRepository
+    public class TreinoRepository : MainContext, ITreinoRepository
     {
         CollectionReference _collection;
 
-        public ExercicioRepository()
+        public TreinoRepository()
         {
-            _collection = _db.Collection("Exercicios");
+            _collection = _db.Collection("Treinos");
         }
 
-        public async Task Create(Exercicio entity)
+        public async Task Create(Treino entity)
         {
             await _collection.Document(entity.Uid).SetAsync(entity);
         }
 
-        public async Task<Exercicio> GetById(string uid)
+        public async Task<Treino> GetById(string uid)
         {
             var snapshot = await _collection.Document(uid).GetSnapshotAsync();
 
             if (snapshot.Exists)
             {
-                var exercicio = snapshot.ConvertTo<Exercicio>();
+                var exercicio = snapshot.ConvertTo<Treino>();
                 return exercicio;
             }
             return null;
         }
 
-        public async Task<IEnumerable<Exercicio>> Get()
+        public async Task<IQueryable<Treino>> Get()
         {
-            var myList = new List<Exercicio>();
+            var myList = new List<Treino>();
             var snapshot = await _collection.GetSnapshotAsync();
 
             myList.AddRange(from item in snapshot.Documents
-                            select item.ConvertTo<Exercicio>());
+                            select item.ConvertTo<Treino>());
 
-            return myList.ToList();
+            return myList.AsQueryable();
         }
 
-        public async Task Update(string uid, Exercicio entity)
+        public async Task Update(string uid, Treino entity)
         {
             var document = _collection.Document(uid);
             await document.SetAsync(entity);

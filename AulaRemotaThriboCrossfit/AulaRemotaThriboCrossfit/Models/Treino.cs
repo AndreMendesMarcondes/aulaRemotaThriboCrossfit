@@ -1,16 +1,22 @@
-﻿using System;
+﻿using Google.Cloud.Firestore;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AulaRemotaThriboCrossfit.Models
 {
-    [Table("Treino")]
+    [FirestoreData]
     public class Treino
     {
-        [Key]
-        public Guid Id { get; set; }
+        public Treino()
+        {
+            Uid = Guid.NewGuid().ToString();
+            Exercicios = new List<ExercicioDescricao>();
+        }
+        [FirestoreDocumentId]
+        public string Uid { get; set; }
+        [FirestoreProperty]
         public DateTime Dia { get; set; }
+        [FirestoreProperty]
         public List<ExercicioDescricao> Exercicios { get; set; }
     }
 }
