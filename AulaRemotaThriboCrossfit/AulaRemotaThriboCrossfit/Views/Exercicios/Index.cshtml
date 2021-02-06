@@ -51,10 +51,6 @@
                     {
                         <span>Sem vídeo</span>
                     }
-                    @*<video width="250" height="200" controls>
-                            <source src="@item.VideoURL" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>*@
                 </td>
                 <td>
                     <a asp-action="Delete" asp-route-id="@item.Uid" type="button" class="btn btn-danger">
@@ -68,12 +64,12 @@
 
 @*-------------------------------------MODAL--------------------------------------*@
 <div class="modal fade" id="modalVideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-                <video width="500" height="500" controls id="videoModal" name="videoModal">
-                    <source type="video/mp4" id="videoModalUrl" name="videoModalUrl">
-                    Your browser does not support the video tag.
-                </video>
+            <video controls id="videoModal" name="videoModal">
+                <source type="video/mp4" id="videoModalUrl" name="videoModalUrl">
+                Your browser does not support the video tag.
+            </video>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             </div>
@@ -87,9 +83,23 @@
             $('#videoModal').get(0).pause();
             $('#videoModalUrl').attr('src', videoUrl);
             $('#videoModal').get(0).load();
-            $('#videoModal').get(0).play();
-            //$(e.currentTarget).find('source[name="videoModalUrl"]').val(bookId);
+            openFullscreen($('#videoModal').get(0));
         });
+        function openFullscreen(myVideo) {
+            console.log("hitting")
+            var elem = myVideo
+            console.log(elem)
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem.msRequestFullscreen();
+            }
+            $('#videoModal').get(0).play();
+        }
         $('#tableExercicio').DataTable({
             language: {
                 "sEmptyTable": "Nenhum registro encontrado",
