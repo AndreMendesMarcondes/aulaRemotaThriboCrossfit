@@ -14,5 +14,6 @@ namespace AulaRemotaThriboCrossfit.Models
         public string Nome { get; set; }
         public string Equipamento { get; set; }
         public IFormFile Video { get; set; }
+        public string TipoExercicio { get; set; }
     }
 }

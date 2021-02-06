@@ -45,7 +45,7 @@ namespace AulaRemotaThriboCrossfit.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Uid,Nome,Equipamento,Video")] ExercicioDTO exercicioDTO)
+        public async Task<IActionResult> Create([Bind("Uid,Nome,Equipamento,Video,TipoExercicio")] ExercicioDTO exercicioDTO)
         {
             var exercicio = new Exercicio();
             if (ModelState.IsValid)
@@ -56,6 +56,7 @@ namespace AulaRemotaThriboCrossfit.Controllers
                 exercicio.Equipamento = exercicioDTO.Equipamento;
                 exercicio.Nome = exercicioDTO.Nome;
                 exercicio.VideoURL = urlVideo;
+                exercicio.TipoExercicio = exercicioDTO.TipoExercicio;
 
                 await _exercicioRepository.Create(exercicio);
 

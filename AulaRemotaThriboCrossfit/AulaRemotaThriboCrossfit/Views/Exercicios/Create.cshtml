@@ -18,8 +18,23 @@
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="TipoExercicio" class="control-label"></label>
+                <select asp-for="TipoExercicio" class="form-control">
+                    <option value="Alongamento">Alongamento</option>
+                    <option value="Aquecimento">Aquecimento</option>
+                    <option value="Core">Core</option>
+                    <option value="WOD">WOD</option>
+                    <option value="Geral">Geral</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label asp-for="Equipamento" class="control-label"></label>
-                <input asp-for="Equipamento" class="form-control" />
+                <select asp-for="Equipamento" class="form-control">
+                    <option value="Anilha">Anilha</option>
+                    <option value="Dumbbell">Dumbbell</option>
+                    <option value="Kettlebell">Kettlebell</option>
+                    <option value="Bola">Bola</option>
+                </select>
                 <span asp-validation-for="Equipamento" class="text-danger"></span>
             </div>
             <dl>
