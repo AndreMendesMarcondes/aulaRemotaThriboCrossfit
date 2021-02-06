@@ -1,19 +1,23 @@
-﻿using AulaRemotaThriboCrossfit.Data;
+﻿using AulaRemotaThriboCrossfit.Data.Interface;
 using AulaRemotaThriboCrossfit.Models;
-using AulaRemotaThriboCrossfit.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace AulaRemotaThriboCrossfit.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly IUsuarioRepository _usuarioRepository;
+
+        public LoginController(IUsuarioRepository usuarioRepository)
+        {
+            _usuarioRepository = usuarioRepository;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -22,30 +26,29 @@ namespace AulaRemotaThriboCrossfit.Controllers
         [HttpPost]
         public async Task<IActionResult> Logar(User model)
         {
+            var userModel = await _usuarioRepository.Get(model.Nome, model.Senha);
 
-            var userModel = UserRepository.Get(model.Username, model.Password);
-
-            if (userModel == null)
-                return NotFound(new { message = "Usuário ou senha inválidos" });
-
-            var claims = new List<Claim>
+            if (!(userModel is null))
             {
-                new Claim(ClaimTypes.Name, userModel.Username),
-                new Claim(ClaimTypes.Role, "Administrator"),
-            };
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name,userModel.Nome),
+                    new Claim(ClaimTypes.Role, "Administrator"),
+                };
 
-            var claimsIdentity = new ClaimsIdentity(
-                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsIdentity = new ClaimsIdentity(
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            var authProperties = new AuthenticationProperties
-            {
-                RedirectUri = "/Home/Index",
-            };
+                var authProperties = new AuthenticationProperties
+                {
+                    RedirectUri = "/Home/Index",
+                };
 
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
+            }
 
             return RedirectToAction("index", "home");
         }

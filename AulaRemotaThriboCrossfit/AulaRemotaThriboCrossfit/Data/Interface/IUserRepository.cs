@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AulaRemotaThriboCrossfit.Models;
 using System.Threading.Tasks;
 
 namespace AulaRemotaThriboCrossfit.Data.Interface
 {
-    interface IUserRepository
+    public interface IUsuarioRepository
     {
+        Task<User> Get(string username, string password);
     }
 }

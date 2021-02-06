@@ -1,15 +1,19 @@
-﻿using System;
+﻿using Google.Cloud.Firestore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AulaRemotaThriboCrossfit.Models
 {
+    [FirestoreData]
     public class User
     {
-        public Guid Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Role { get; set; }
+        [FirestoreDocumentId]
+        public string Uid { get; set; }
+        [FirestoreProperty]
+        public string Nome { get; set; }
+        [FirestoreProperty]
+        public string Senha { get; set; }
     }
 }

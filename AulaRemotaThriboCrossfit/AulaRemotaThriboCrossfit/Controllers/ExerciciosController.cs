@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AulaRemotaThriboCrossfit.Data;
 using AulaRemotaThriboCrossfit.Models;
 using AulaRemotaThriboCrossfit.Data.Interface;
 
@@ -12,140 +9,135 @@ namespace AulaRemotaThriboCrossfit.Controllers
     public class ExerciciosController : Controller
     {
         private readonly IExercicioRepository _exercicioRepository;
+        private readonly IFirebaseStorageRepository _firebaseStorageRepository;
 
-        public ExerciciosController(IExercicioRepository exercicioRepository)
+        public ExerciciosController(IExercicioRepository exercicioRepository, IFirebaseStorageRepository firebaseStorageRepository)
         {
             _exercicioRepository = exercicioRepository;
+            _firebaseStorageRepository = firebaseStorageRepository;
         }
 
-        // GET: Exercicios
         public async Task<IActionResult> Index()
         {
             return View(await _exercicioRepository.Get()); ;
         }
 
-        //// GET: Exercicios/Details/5
-        //public async Task<IActionResult> Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var exercicio = await _context.Exercicio
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (exercicio == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var exercicio = await _exercicioRepository.GetById(id);
+            if (exercicio == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(exercicio);
-        //}
+            return View(exercicio);
+        }
 
-        //// GET: Exercicios/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //// POST: Exercicios/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Nome,Equipamento,VideoURL")] Exercicio exercicio)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-               
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(exercicio);
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Uid,Nome,Equipamento,Video")] ExercicioDTO exercicioDTO)
+        {
+            var exercicio = new Exercicio();
+            if (ModelState.IsValid)
+            {
+                var stream = exercicioDTO.Video.OpenReadStream();
+                var urlVideo = await _firebaseStorageRepository.SaveFileAsync(stream);
 
-        //// GET: Exercicios/Edit/5
-        //public async Task<IActionResult> Edit(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+                exercicio.Equipamento = exercicioDTO.Equipamento;
+                exercicio.Nome = exercicioDTO.Nome;
+                exercicio.VideoURL = urlVideo;
 
-        //    var exercicio = await _context.Exercicio.FindAsync(id);
-        //    if (exercicio == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(exercicio);
-        //}
+                await _exercicioRepository.Create(exercicio);
 
-        //// POST: Exercicios/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nome,Equipamento,VideoURL")] Exercicio exercicio)
-        //{
-        //    if (id != exercicio.Id)
-        //    {
-        //        return NotFound();
-        //    }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(exercicio);
+        }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(exercicio);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!ExercicioExists(exercicio.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(exercicio);
-        //}
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //// GET: Exercicios/Delete/5
-        //public async Task<IActionResult> Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var exercicio = await _exercicioRepository.GetById(id);
+            if (exercicio == null)
+            {
+                return NotFound();
+            }
+            return View(exercicio);
+        }
 
-        //    var exercicio = await _context.Exercicio
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (exercicio == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, [Bind("Uid,Nome,Equipamento,VideoURL")] Exercicio exercicio)
+        {
+            if (id != exercicio.Uid)
+            {
+                return NotFound();
+            }
 
-        //    return View(exercicio);
-        //}
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _exercicioRepository.Update(exercicio.Uid, exercicio);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (await ExercicioExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(exercicio);
+        }
 
-        //// POST: Exercicios/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(Guid id)
-        //{
-        //    var exercicio = await _context.Exercicio.FindAsync(id);
-        //    _context.Exercicio.Remove(exercicio);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //private bool ExercicioExists(Guid id)
-        //{
-        //    return _context.Exercicio.Any(e => e.Id == id);
-        //}
+            var exercicio = await _exercicioRepository.GetById(id);
+            if (exercicio == null)
+            {
+                return NotFound();
+            }
+
+            return View(exercicio);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var exercicio = await _exercicioRepository.GetById(id);
+            await _exercicioRepository.Delete(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<bool> ExercicioExists(string id)
+        {
+            return await _exercicioRepository.GetById(id) != null;
+        }
     }
 }

@@ -43,5 +43,15 @@ namespace AulaRemotaThriboCrossfit.Data.Imp
 
             return myList.AsQueryable();
         }
+
+        public async Task Update(string uid, Exercicio entity)
+        {
+            var document = _collection.Document(uid);
+            await document.SetAsync(entity);
+        }
+        public async Task Delete(string uid)
+        {
+            await _collection.Document(uid).DeleteAsync();
+        }
     }
 }

@@ -18,5 +18,7 @@ namespace AulaRemotaThriboCrossfit.Models
         public string Equipamento { get; set; }
         [FirestoreProperty]
         public string VideoURL { get; set; }
+        [FirestoreProperty]
+        public string TipoExercicio { get; set; }
     }
 }

@@ -9,5 +9,7 @@ namespace AulaRemotaThriboCrossfit.Data.Interface
         public Task Create(Exercicio entity);
         public Task<Exercicio> GetById(string uid);
         Task<IQueryable<Exercicio>> Get();
+        Task Update(string uid, Exercicio entity);
+        Task Delete(string uid);
     }
 }

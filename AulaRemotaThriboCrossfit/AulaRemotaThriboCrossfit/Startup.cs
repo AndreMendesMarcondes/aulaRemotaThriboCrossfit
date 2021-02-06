@@ -1,24 +1,19 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using AulaRemotaThriboCrossfit.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.IdentityModel.Logging;
-using AulaRemotaThriboCrossfit.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using AulaRemotaThriboCrossfit.Data.Imp;
 using AulaRemotaThriboCrossfit.Data.Interface;
 using System.IO;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using System.Net;
+using AulaRemotaThriboCrossfit.Data;
 
 namespace AulaRemotaThriboCrossfit
 {
@@ -31,48 +26,24 @@ namespace AulaRemotaThriboCrossfit
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
            .AddCookie(options =>
            {
-               options.LoginPath = "/Login/index";
+               options.LoginPath = "/Login/Index";
            });
 
             services.AddControllersWithViews()
                   .AddRazorRuntimeCompilation();
 
-            services.ConfigureApplicationCookie(options => options.LoginPath = "/login");
-
-            string credential_path = $@"{Directory.GetCurrentDirectory()}/GCredentials/aularemotathribocrossfit-690e2c09fd7f.json";
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
-
-            services
-            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.Authority = "https://securetoken.google.com/aularemotathribocrossfit";
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = "https://securetoken.google.com/aularemotathribocrossfit",
-                    ValidateAudience = true,
-                    ValidAudience = "aularemotathribocrossfit",
-                    ValidateLifetime = true
-                };
-            });
+            AuthenticationWithGoogle(services);
 
             services.AddScoped<IExercicioRepository, ExercicioRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IFirebaseStorageRepository, FirebaseStorageRepository>();
 
-            services.AddCors(o => o.AddPolicy("aularemotathribocrossfit", builder =>
-                {
-                    builder.AllowAnyOrigin()
-                           .AllowAnyMethod()
-                           .AllowAnyHeader();
-                }));
+            EnableCors(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,19 +56,26 @@ namespace AulaRemotaThriboCrossfit
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseCors("aularemotathribocrossfit");
+
+            app.UseStatusCodePages(async context => {
+                var response = context.HttpContext.Response;
+
+                if (response.StatusCode == (int)HttpStatusCode.Unauthorized ||
+                    response.StatusCode == (int)HttpStatusCode.NotFound ||
+                    response.StatusCode == (int)HttpStatusCode.Forbidden)
+                    response.Redirect("/Login/Index");
+                else
+                {
+                    app.UseExceptionHandler("/Home/Index");
+                }
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseCors(x => x
-              .AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader());
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -108,6 +86,22 @@ namespace AulaRemotaThriboCrossfit
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private static void AuthenticationWithGoogle(IServiceCollection services)
+        {
+            string credential_path = $@"{Directory.GetCurrentDirectory()}/GCredentials/aularemotathribocrossfit-690e2c09fd7f.json";
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
+        }
+
+        private static void EnableCors(IServiceCollection services)
+        {
+            services.AddCors(o => o.AddPolicy("aularemotathribocrossfit", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
     }
 }
