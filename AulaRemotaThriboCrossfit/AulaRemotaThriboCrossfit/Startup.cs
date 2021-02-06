@@ -16,6 +16,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Logging;
 using AulaRemotaThriboCrossfit.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using AulaRemotaThriboCrossfit.Data.Imp;
+using AulaRemotaThriboCrossfit.Data.Interface;
+using System.IO;
 
 namespace AulaRemotaThriboCrossfit
 {
@@ -44,8 +47,32 @@ namespace AulaRemotaThriboCrossfit
 
             services.ConfigureApplicationCookie(options => options.LoginPath = "/login");
 
-            services.AddDbContext<AulaRemotaThriboCrossfitContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("AulaRemotaThriboCrossfitContext")));
+            string credential_path = $@"{Directory.GetCurrentDirectory()}/GCredentials/aularemotathribocrossfit-690e2c09fd7f.json";
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credential_path);
+
+            services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.Authority = "https://securetoken.google.com/aularemotathribocrossfit";
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = "https://securetoken.google.com/aularemotathribocrossfit",
+                    ValidateAudience = true,
+                    ValidAudience = "aularemotathribocrossfit",
+                    ValidateLifetime = true
+                };
+            });
+
+            services.AddScoped<IExercicioRepository, ExercicioRepository>();
+
+            services.AddCors(o => o.AddPolicy("aularemotathribocrossfit", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +88,7 @@ namespace AulaRemotaThriboCrossfit
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseCors("aularemotathribocrossfit");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

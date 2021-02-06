@@ -1,4 +1,5 @@
-﻿using AulaRemotaThriboCrossfit.Models;
+﻿using AulaRemotaThriboCrossfit.Data.Interface;
+using AulaRemotaThriboCrossfit.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AulaRemotaThriboCrossfit.Data
 {
-    public class UserRepository
+    public class UserRepository : MainContext, IUserRepository
     {
         public static User Get(string username, string password)
         {

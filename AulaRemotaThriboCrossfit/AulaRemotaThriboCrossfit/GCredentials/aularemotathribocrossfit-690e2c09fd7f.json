@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "aularemotathribocrossfit",
+  "private_key_id": "690e2c09fd7f591e021fc3e3f6ef4881768e91bb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCHLMU7zs5AOEZu\nowhbV95l0uPHxQklcGpV15RyTzVfzYOg3W2ynKdVIwtWNSLGnisKdTwJX8ik8FVs\nnhkHzYCrrrEuAE032dKC1w49YuRpb2zbHVYiPN7eBOTnv9gVvc5M5CYSx6vkw96g\nXVuXxpd4/0K2R4pTkrKl2tyOfictyIigQxHlNiuvqo6sYsjuJp1i4yyYDNsrHw+M\nXwEaToDHquLWC3TGwIgOTcysyDvppK4nlWWrI99dAa4CK/0kO8QiMuaC7miPZfDR\nqzdMW0F2A1WcPxapurX1/cZlDw+c0kjXV8cb9WfhPfbeydaJ+8UPfPitrcdgJVk2\n4nTQiR0bAgMBAAECggEAQHv7Gyzs93XhI6ZitjCUx75zKzmzw0h9cbYF+wIOVEWW\nJYd8bViN+u9c2SNAE8AgiDylB1PKQ+Ti244QIsjGOSB9JZS/QYWIByLQiDhE/odJ\nRr4X+P1Q1FlBWc0LKFQDtmqgPxVBy0AlVBs1NpJmcDJVgN9f/b5duwFNdix4RD5U\nchmmku5cVZvG4822OUPK9zPGn9UHd5cmwWjG8HvXhkBksD1ldTq/1XFH+JsDJ3fi\ntC9tYmENl1TiM0lBEBHD+NafxKmzvapM1+WNzJS42KQIQUwJ3eSYXB881Hyf9x8d\nsmRvFQwuqAMQrWaPB3OS7w/6+0exdM8nSQQSl141AQKBgQC7Gyhuzt9evIa1EEAH\nMmbEQhhoCLPJ+LJE3ogniZCPSN8l70G0c3vhbYu6Xnn5YGGAECjdiWtZeS43roRm\nXXBAh8OPJl8JCykViUFGVZHMGEhyZgJz4dIKHgvFkEUtkLah39vONsw4zCCNCq1d\ngmxMu4aSs/qxDtD3Wd4iX3aqfQKBgQC48oQIIGL9p3qcCX6D1oZuAAyN5dovwDFT\nQX69lW+IJLmRh+rZ2fK54qYOS2YjmMM6TtM7vHXWZPwhGeo9N9YX0tCdGWdYYaqP\nRvP7jwD2sqb3WCJXf3iaiz2GTaLvgtBHtSyQ7IlRPhujmgNY8pO1W8ynY8xmQ7MB\ngG2xVSjhdwKBgF6RZ2o6HSPg3aT+RZ5dlxty3KsYWuamUFQGtYJmQS5qgn7F4su1\n4tMZbxoPTk8Aq8byY/U005Excm6qQjkK2QWEmQ7tMfN8NJOx/8/wx/QEAfnwHSU8\n6dA7R2/fb1eMYQKIBqy/fZDnezxOPTmaBeryjR3w4bBD8NJUFbYB0hRxAoGAFdy9\nFMTXTsq0aKuKpAUA4RHqaf+ougpLCl9snvaCN6K3uOdLMLNdyPFs1bW9/ik5srPM\nrnwJpe1MDJGmqdPm3+wQsvFk0QLCiatGfg8aew8FQ6nMbXFpDUO2YyDcSNm6yy80\ndHExjkP8OmujR6ltInwWhhb6+3+3Mk8/KD471eMCgYBBA2iq6Mj2pNpOiZuWYD1h\nV/523ZRhB1VHFZEfYHPUMQFddwJZfbxSm2oUkNZLsUBRFkRaPL7fENMPAPv0Mjbx\nLzA8z2ME6qNY+1pOPerm/zeFglCcJyRfiZutiNaV8Gp55ExrSaAkhbznIiBC2fkW\nTSxrlrVxKPV6h4b/NUPl4g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-5atys@aularemotathribocrossfit.iam.gserviceaccount.com",
+  "client_id": "114577795934664531748",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-5atys%40aularemotathribocrossfit.iam.gserviceaccount.com"
+}
