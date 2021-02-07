@@ -45,6 +45,11 @@ namespace AulaRemotaThriboCrossfit.Controllers
             return View(await _treinoRepository.Get()); ;
         }
 
+        public async Task<IActionResult> Ver(string id)
+        {
+            return RedirectToAction("index", "VerTreino", new { id = id});
+        }
+
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -186,8 +191,8 @@ namespace AulaRemotaThriboCrossfit.Controllers
             var listaFiltrada = new List<Exercicio>();
 
             if (!string.IsNullOrEmpty(tipoExercicio) && !string.IsNullOrEmpty(equipamento))
-                listaFiltrada = ListaExercicios.Where(c => (c.TipoExercicio == tipoExercicio || c.TipoExercicio == "Nenhum") &&
-                    (c.Equipamento == equipamento || c.Equipamento == "Nenhum")).ToList();
+                listaFiltrada = ListaExercicios.Where(c => (c.TipoExercicio == tipoExercicio || c.TipoExercicio == "Outro") &&
+                    (c.Equipamento == equipamento || c.Equipamento == "Outro")).ToList();
 
             ViewBag.ListaDeExercicios = listaFiltrada;
 

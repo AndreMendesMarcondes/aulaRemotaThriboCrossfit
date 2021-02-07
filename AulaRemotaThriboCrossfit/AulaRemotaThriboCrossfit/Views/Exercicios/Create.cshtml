@@ -18,11 +18,12 @@
             <div class="form-group">
                 <label asp-for="TipoExercicio" class="control-label"></label>
                 <select asp-for="TipoExercicio" class="form-control">
-                    <option value="Alongamento">Alongamento</option>
+                    <option value="Mobilidade">Mobilidade</option>
                     <option value="Aquecimento">Aquecimento</option>
                     <option value="Core">Core</option>
                     <option value="WOD">WOD</option>
-                    <option value="Nenhum">Nenhum</option>
+                    <option value="Alongamento">Alongamento</option>
+                    <option value="Outro">Outro</option>
                 </select>
             </div>
             <div class="form-group">
@@ -32,7 +33,7 @@
                     <option value="Dumbbell">Dumbbell</option>
                     <option value="Kettlebell">Kettlebell</option>
                     <option value="Bola">Bola</option>
-                    <option value="Nenhum">Nenhum</option>
+                    <option value="Outro">Outro</option>
                 </select>
                 <span asp-validation-for="Equipamento" class="text-danger"></span>
             </div>
