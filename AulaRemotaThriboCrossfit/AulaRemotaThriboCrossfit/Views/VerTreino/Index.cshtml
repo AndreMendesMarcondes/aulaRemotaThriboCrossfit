@@ -22,19 +22,19 @@
                     <p>
                         @if (Model.Equipamento == "Anilha")
                         {
-                            <img src="~/img/anilha.png" />
+                        <img src="~/img/anilha.png" />
                         }
                         else if (Model.Equipamento == "Dumbbell")
                         {
-                            <img src="~/img/dumbell.png" />
+                        <img src="~/img/dumbell.png" />
                         }
                         else if (Model.Equipamento == "Kettlebell")
                         {
-                            <img src="~/img/ktb.png" />
+                        <img src="~/img/ktb.png" />
                         }
                         else
                         {
-                            <img src="~/img/bola.png" />
+                        <img src="~/img/bola.png" />
                         }
                     </p>
                     <h1> @Model.Equipamento</h1>
@@ -46,15 +46,15 @@
                             <div class="text-left">
                                 @foreach (var item in Model.Exercicios.Where(c => c.Exercicio.TipoExercicio == "Mobilidade").ToList())
                                 {
-                                    <p class="descricaoExercicio">
-                                        <span>@item.Exercicio.Nome</span>
-                                        <span>@item.Descricao</span>
-                                        <span>
-                                            <button type="button" class="btn btn-outline-info" data-video-url="@item.Exercicio.VideoURL" data-toggle="modal" data-target="#modalVideo">
-                                                <span class="glyphicon glyphicon-facetime-video"></span> Assistir
-                                            </button>
-                                        </span>
-                                    </p>
+                                <p class="descricaoExercicio">
+                                    <span>@item.Exercicio.Nome</span>
+                                    <span>@item.Descricao</span>
+                                    <span>
+                                        <button type="button" class="btn btn-outline-info" data-video-url="@item.Exercicio.VideoURL" data-toggle="modal" data-target="#modalVideo">
+                                            <span class="glyphicon glyphicon-facetime-video"></span> Assistir
+                                        </button>
+                                    </span>
+                                </p>
                                 }
                             </div>
                         </div>
@@ -67,15 +67,15 @@
                             <div class="text-left">
                                 @foreach (var item in Model.Exercicios.Where(c => c.Exercicio.TipoExercicio == "Aquecimento").ToList())
                                 {
-                                    <p class="descricaoExercicioAquecimento">
-                                        <span>@item.Exercicio.Nome</span>
-                                        <span>@item.Descricao</span>
-                                        <span>
-                                            <button type="button" class="btn btn-outline-info" data-video-url="@item.Exercicio.VideoURL" data-toggle="modal" data-target="#modalVideo">
-                                                <span class="glyphicon glyphicon-facetime-video"></span> Assistir
-                                            </button>
-                                        </span>
-                                    </p>
+                                <p class="descricaoExercicioAquecimento">
+                                    <span>@item.Exercicio.Nome</span>
+                                    <span>@item.Descricao</span>
+                                    <span>
+                                        <button type="button" class="btn btn-outline-info" data-video-url="@item.Exercicio.VideoURL" data-toggle="modal" data-target="#modalVideo">
+                                            <span class="glyphicon glyphicon-facetime-video"></span> Assistir
+                                        </button>
+                                    </span>
+                                </p>
                                 }
                             </div>
                         </div>
@@ -88,15 +88,15 @@
                             <div class="text-left">
                                 @foreach (var item in Model.Exercicios.Where(c => c.Exercicio.TipoExercicio == "Core").ToList())
                                 {
-                                    <p class="descricaoExercicioCore">
-                                        <span>@item.Exercicio.Nome</span>
-                                        <span>@item.Descricao</span>
-                                        <span>
-                                            <button type="button" class="btn btn-outline-info" data-video-url="@item.Exercicio.VideoURL" data-toggle="modal" data-target="#modalVideo">
-                                                <span class="glyphicon glyphicon-facetime-video"></span> Assistir
-                                            </button>
-                                        </span>
-                                    </p>
+                                <p class="descricaoExercicioCore">
+                                    <span>@item.Exercicio.Nome</span>
+                                    <span>@item.Descricao</span>
+                                    <span>
+                                        <button type="button" class="btn btn-outline-info" data-video-url="@item.Exercicio.VideoURL" data-toggle="modal" data-target="#modalVideo">
+                                            <span class="glyphicon glyphicon-facetime-video"></span> Assistir
+                                        </button>
+                                    </span>
+                                </p>
                                 }
                             </div>
                         </div>
@@ -109,15 +109,15 @@
                             <div class="text-left">
                                 @foreach (var item in Model.Exercicios.Where(c => c.Exercicio.TipoExercicio == "WOD").ToList())
                                 {
-                                    <p class="descricaoExercicioWod">
-                                        <span>@item.Exercicio.Nome</span>
-                                        <span>@item.Descricao</span>
-                                        <span>
-                                            <button type="button" class="btn btn-outline-info" data-video-url="@item.Exercicio.VideoURL" data-toggle="modal" data-target="#modalVideo">
-                                                <span class="glyphicon glyphicon-facetime-video"></span> Assistir
-                                            </button>
-                                        </span>
-                                    </p>
+                                <p class="descricaoExercicioWod">
+                                    <span>@item.Exercicio.Nome</span>
+                                    <span>@item.Descricao</span>
+                                    <span>
+                                        <button type="button" class="btn btn-outline-info" data-video-url="@item.Exercicio.VideoURL" data-toggle="modal" data-target="#modalVideo">
+                                            <span class="glyphicon glyphicon-facetime-video"></span> Assistir
+                                        </button>
+                                    </span>
+                                </p>
                                 }
                             </div>
                         </div>
@@ -128,17 +128,17 @@
                     <div class="col-md-12 text-center">
                         <div class="meio">
                             <div class="text-left">
-                                @foreach (var item in Model.Exercicios.Where(c => c.Exercicio.TipoExercicio == "WOD").ToList())
+                                @foreach (var item in Model.Exercicios.Where(c => c.Exercicio.TipoExercicio == "Alongamento").ToList())
                                 {
-                                    <p class="descricaoExercicioAlongamento">
-                                        <span>@item.Exercicio.Nome</span>
-                                        <span>@item.Descricao</span>
-                                        <span>
-                                            <button type="button" class="btn btn-outline-info" data-video-url="@item.Exercicio.VideoURL" data-toggle="modal" data-target="#modalVideo">
-                                                <span class="glyphicon glyphicon-facetime-video"></span> Assistir
-                                            </button>
-                                        </span>
-                                    </p>
+                                <p class="descricaoExercicioAlongamento">
+                                    <span>@item.Exercicio.Nome</span>
+                                    <span>@item.Descricao</span>
+                                    <span>
+                                        <button type="button" class="btn btn-outline-info" data-video-url="@item.Exercicio.VideoURL" data-toggle="modal" data-target="#modalVideo">
+                                            <span class="glyphicon glyphicon-facetime-video"></span> Assistir
+                                        </button>
+                                    </span>
+                                </p>
                                 }
                             </div>
                         </div>
@@ -163,6 +163,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <link href="~/css/exericios.css" rel="stylesheet" />
     <style>
         body {
             background: url("../../img/fundocross.jpg") no-repeat center center fixed;
@@ -197,10 +198,6 @@
             background: rgba(0, 0, 0, 0.5);
         }
 
-        .meio {
-            width: 50%;
-            margin-left: 25%;
-        }
 
         .descricaoExercicio {
             color: rgb(255, 216, 0);
@@ -216,10 +213,12 @@
             color: rgb(182, 255, 0);
             font-size: 20px;
         }
+
         .descricaoExercicioWod {
             color: white;
             font-size: 20px;
         }
+
         .descricaoExercicioAlongamento {
             color: mediumpurple;
             font-size: 20px;
