@@ -24,57 +24,58 @@
                 @Html.DisplayNameFor(model => model.Equipamento)
             </th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @item.Dia.ToString("dd/MM/yyyy")
-            </td>
-            <td>
-                @{
-                    switch (item.Dia.DayOfWeek.ToString())
-                    {
-                        case "Monday":
-                            <span>Segunda</span>
-                            break;
-                        case "Tuesday":
-                            <span>Terça</span>
-                            break;
-                        case "Wednesday":
-                            <span>Quarta</span>
-                            break;
-                        case "Thursday":
-                            <span>Quinta</span>
-                            break;
-                        case "Friday":
-                            <span>Sexta</span>
-                            break;
-                        case "Saturday":
-                            <span>Sábado</span>
-                            break;
-                        default:
-                            <span>Domningo</span>
-                            break;
+            <tr>
+                <td>
+                    @item.Dia.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @{
+                        switch (item.Dia.DayOfWeek.ToString())
+                        {
+                            case "Monday":
+                                <span>Segunda</span>
+                                break;
+                            case "Tuesday":
+                                <span>Terça</span>
+                                break;
+                            case "Wednesday":
+                                <span>Quarta</span>
+                                break;
+                            case "Thursday":
+                                <span>Quinta</span>
+                                break;
+                            case "Friday":
+                                <span>Sexta</span>
+                                break;
+                            case "Saturday":
+                                <span>Sábado</span>
+                                break;
+                            default:
+                                <span>Domningo</span>
+                                break;
+                        }
                     }
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Equipamento)
-            </td>
-            <td>
-                <a asp-action="Ver" asp-route-id="@item.Uid" type="button" class="btn btn-primary"  target="_blank">
-                    <span class="glyphicon glyphicon-eye-open"></span> Visualizar
-                </a>
-            </td>
-            <td>
-                <a asp-action="Delete" asp-route-id="@item.Uid" type="button" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-trash"></span> Delete
-                </a>
-            </td>
-        </tr>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipamento)
+                </td>
+                <td>
+                    <a asp-action="Ver" asp-route-id="@item.Uid" type="button" class="btn btn-primary" target="_blank">
+                        <span class="glyphicon glyphicon-eye-open"></span> Visualizar
+                    </a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Uid" type="button" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span> Delete
+                    </a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

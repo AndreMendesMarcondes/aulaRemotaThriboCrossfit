@@ -100,7 +100,8 @@ namespace AulaRemotaThriboCrossfit.Controllers
                     await _treinoRepository.Create(treino);
                 }
             }
-            return View(treino);
+            var treinos = await _treinoRepository.Get();
+            return View("Index", treinos);
         }
 
         public async Task<IActionResult> Edit(string id)
